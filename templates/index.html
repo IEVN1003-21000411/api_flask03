@@ -1,0 +1,15 @@
+{% extends "layout.html" %}<!--Para poder heredar lo de que estamos incrustando -->
+
+{% block content  %}
+    <h1>Hola desde index</h1>
+
+    <!--Podemos poner-datos en vedido utilisando ninja-->
+    <h2>{{ titulo }}</h2>
+    <ul>
+        {% for opera in list %}
+            <li>{{opera}}<li>
+        {% endfor %}
+    </ul>
+{% endblock  %}
+
+

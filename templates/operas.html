@@ -1,0 +1,18 @@
+{% extends "layout.html" %}<!--Para poder heredar lo de que estamos incrustando -->
+
+{% block content  %}
+    <h1>Operaciones</h1>
+
+    <form action="" method="post">
+        <div class="mb-3">
+            <label for="n1" class="form-label">N1</label>
+            <input type="text" class="form-control" id="n1" name="n1"></input>
+        </div>
+        <div class="mb-3">
+            <label for="n2" class="form-label">N2</label>
+            <input type="text" class="form-control" id="n2" name="n2"></input>
+        </div>
+        <button type="submit" class="btn btn-primary">Calcular</button>
+    </form>
+
+{% endblock  %}
