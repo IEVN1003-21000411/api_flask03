@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% import "_macros.html" as macro%}
+<form action="" method="post" class="from-control" novalidate>
+    
+    <h1>Calcular Area de la Figura</h1>
+    {{ macro.figura(form.figura) }}
+    {{ macro.figura(form.base) }}
+    {{ macro.figura(form.altura) }}
+    <button type="submit" class="btn btn-primary">Calcular</button>
+/<form>
+{% if area is not none %}
+    <h2>El área es: {{ area }}</h2>
+{% endif %}
+
+{%endblock%}

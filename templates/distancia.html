@@ -1,5 +1,16 @@
 {% extends "layout.html" %}<!--Para poder heredar lo de que estamos incrustando en este caso lo del layout -->
 
 {% block content  %}
+
+{% import "_macros.html" as macro %}<!--Estamos llamado las macros que hallamos creado en la paginad _macros.html-->
     <h1>Distancia</h1>
+
+    <form class="from-control" action="" method="post">
+        {{ macro.campo1('x1','Ingrese X1',"number")}}
+        {{ macro.campo1('y1','Ingrese Y1',"email")}}
+        {{ macro.campo1('x2','Ingrese',"password")}}
+        {{ macro.campo1('y2','Ingrese Y2')}}
+    </form>
 {% endblock  %}
+
+
