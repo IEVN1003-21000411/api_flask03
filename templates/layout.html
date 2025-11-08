@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap-responsive.min.css') }}">
     <style>
         body{
             padding-top: 60px;}
@@ -44,6 +45,7 @@
             </ul>
         </div>
        </div>
+    </div>
     <!--Para incustrar las otras paginas es de la siguintes manera-->
     {% block content %}
     <!--a qui es donde va ir iterado o mas bien herrado en los demas pagina puede ir como por ejemplo <h1>Distancia</h1> y <h1>Operaciones</h1>-->

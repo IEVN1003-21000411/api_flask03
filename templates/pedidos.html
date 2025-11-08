@@ -1,0 +1,192 @@
+{% extends "layout.html" %} {% block content %} {% import "_macros.html" as
+macro %}
+
+<style>
+  .panel {
+    background: #a9bfd3;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  fieldset {
+    border: 1px solid #8ea5b7;
+    padding: 8px;
+  }
+  legend {
+    font-size: 14px;
+    width: auto;
+    padding: 0 6px;
+  }
+  .panel-ventas {
+    background: #d0d0d0;
+    padding: 12px;
+    border-radius: 6px;
+  }
+  .bloque {
+    margin-bottom: 10px;
+  }
+  .tabla-wrap {
+    background: #c7cfd6;
+    padding: 8px;
+    border-radius: 4px;
+  }
+  .btn-min {
+    padding: 4px 12px;
+  }
+  hr.divisor {
+    border: 0;
+    border-top: 2px solid #8ea5b7;
+    margin: 12px 0;
+  }
+</style>
+
+<div class="panel">
+  <form action="" method="post" class="form-control" novalidate>
+    <div class="row bloque">
+      <div class="span4">{{ macro.campo(form.nombre) }}</div>
+      <div class="span4">{{ macro.campo(form.direccion) }}</div>
+      <div class="span4">{{ macro.campo(form.telefono) }}</div>
+    </div>
+
+    <div class="row bloque">
+      <div class="span4">
+        <fieldset>
+          <legend>Tamaño Pizza</legend>
+          {{ macro.radios(form.tamano) }}
+          <small class="muted">Chica $40 · Mediana $80 · Grande $120</small>
+        </fieldset>
+      </div>
+
+      <div class="span4">
+        <fieldset>
+          <legend>Ingredientes</legend>
+
+          <label class="checkbox" for="ing_jamon">
+            <input
+              type="checkbox"
+              id="ing_jamon"
+              name="{{ form.ingredientes.name }}"
+              value="jamon" />
+            Jamón $10
+          </label>
+          <label class="checkbox" for="ing_pina">
+            <input
+              type="checkbox"
+              id="ing_pina"
+              name="{{ form.ingredientes.name }}"
+              value="piña" />
+            Piña $10
+          </label>
+          <label class="checkbox" for="ing_champi">
+            <input
+              type="checkbox"
+              id="ing_champi"
+              name="{{ form.ingredientes.name }}"
+              value="champiñones" />
+            Champiñones $10
+          </label>
+
+          <small class="muted">Selecciona uno o varios</small>
+        </fieldset>
+      </div>
+
+      <div class="span4">
+        {{ macro.campo(form.cantidad) }}
+        <button
+          type="submit"
+          name="action"
+          value="agregar"
+          class="btn btn-primary btn-min">
+          Agregar
+        </button>
+      </div>
+    </div>
+
+    <hr class="divisor" />
+
+    <div class="row bloque">
+      <div class="span7">
+        <div class="tabla-wrap">
+          <table class="table table-bordered table-striped">
+            <thead class="tr-head">
+              <tr>
+                <th style="width: 20px">•</th>
+                <th>Tamaño</th>
+                <th>Ingredientes</th>
+                <th>Num. Pizzas</th>
+                <th>SubTotal</th>
+                <th style="width: 80px">Quitar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if pedido %} {% for item in pedido %}
+              <tr>
+                <td></td>
+                <td>{{ item.tamano }}</td>
+                <td>{{ item.ingredientes | join(', ') }}</td>
+                <td>{{ item.cantidad }}</td>
+                <td>${{ "%.2f"|format(item.subtotal) }}</td>
+                <td>
+                  <button
+                    type="submit"
+                    name="action"
+                    value="quitar_{{ loop.index0 }}"
+                    class="btn btn-danger btn-sm">
+                    Quitar
+                  </button>
+                </td>
+              </tr>
+              {% endfor %} {% else %}
+              <tr>
+                <td colspan="6" class="text-center text-muted">(sin pizzas)</td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="row" style="margin-top: 8px">
+          
+          <div class="span3" style="text-align: right">
+            <button
+              type="submit"
+              name="action"
+              value="terminar"
+              class="btn btn-success btn-min">
+              Terminar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="span5">
+        <div class="panel-ventas">
+          <strong>Venta del día</strong>
+          <hr />
+          {% if ventas_hoy and ventas_hoy|length>0 %} {% for nombre, total in
+          ventas_hoy %}
+          <p style="font-size: 16px">
+            <strong>{{ nombre }}</strong> &nbsp; total &nbsp; ${{
+            "%.0f"|format(total) }}
+          </p>
+          {% endfor %}
+          <hr />
+          <p style="font-size: 18px">
+            <strong>Ventas totales del día:</strong> ${{
+            "%.0f"|format(total_dia) }}
+          </p>
+          {% else %}
+          <p class="muted">Aún no hay ventas registradas hoy.</p>
+          {% endif %}
+          <button
+            formaction="{{ url_for('get_cookie') }}"
+            formmethod="get"
+            class="btn btn-secondary btn-min">
+            Ventas totales por día
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}
